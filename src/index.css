@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Dancing Script';
+  src: url('./fonts/DancingScript-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+#eliptica-logo{
+  font-family: 'Dancing Script', cursive;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
