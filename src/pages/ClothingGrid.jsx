@@ -1,12 +1,7 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-// Datos de ejemplo
-const clothesData = [
-  { id: 1, name: 'Camisa Roja', color: 'Rojo', season: 'Verano', gender: 'Hombre', style: 'Casual', img: '/assets/cam_rojo_h_verano_casual_001.jpg' },
-  { id: 2, name: 'Pantalones Azules', color: 'Azul', season: 'Invierno', gender: 'Mujer', style: 'Formal', img: '/assets/pan_azul_m_invierno_formal_001.jpg' },
-  { id: 3, name: 'Pantalones Azules', color: 'Azul', season: 'Invierno', gender: 'Mujer', style: 'Casual', img: '/assets/pan_azul_m_invierno_casual_001.jpg' },
-  // Agrega más prendas según sea necesario
-];
+import { showLoader, hideLoader, alerta } from './js/general';
 
 const FilterPanel = ({ filters, setFilters }) => {
   return (
@@ -18,7 +13,7 @@ const FilterPanel = ({ filters, setFilters }) => {
           <option value="">Todos</option>
           <option value="Rojo">Rojo</option>
           <option value="Azul">Azul</option>
-          {/* Agrega más colores según sea necesario */}
+          <option value="Negro">Negro</option>
         </select>
       </div>
       <div>
@@ -49,6 +44,17 @@ const FilterPanel = ({ filters, setFilters }) => {
   );
 };
 
+FilterPanel.propTypes = {
+  filters: PropTypes.shape({
+    color: PropTypes.string,
+    season: PropTypes.string,
+    gender: PropTypes.string,
+    style: PropTypes.string,
+  }).isRequired,
+  setFilters: PropTypes.func.isRequired,
+};
+
+
 const ClothingGrid = () => {
   const [filters, setFilters] = useState({
     color: '',
@@ -57,7 +63,33 @@ const ClothingGrid = () => {
     style: '',
   });
 
-  const filteredClothes = clothesData.filter(item => {
+  const [clothes, setClothes] = useState([]);
+
+  const fetchClothes = async () => {
+    try {
+      showLoader();
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/app/prenda`);
+      hideLoader();
+
+      if (!response.ok) {
+        alerta.error('Error al consultar las prendas.');
+        return;
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setClothes(data.items); // Suponiendo que devuelves { items: [] } en el backend
+    } catch (error) {
+      hideLoader();
+      console.error('Error:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchClothes();
+  }, []);
+
+  const filteredClothes = clothes.filter(item => {
     return (
       (!filters.color || item.color === filters.color) &&
       (!filters.season || item.season === filters.season) &&
@@ -69,17 +101,21 @@ const ClothingGrid = () => {
   return (
     <div style={{ display: 'flex' }}>
       <FilterPanel filters={filters} setFilters={setFilters} />
-      <div className="clothing-grid" style={{ marginLeft: '20px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '10px' }}>
-        {filteredClothes.map(item => (
-          <div key={item.id} className="clothing-item" style={{ border: '1px solid #ccc', padding: '10px' }}>
-            <h4>{item.name}</h4>
-            <p>Color: {item.color}</p>
-            <p>Temporada: {item.season}</p>
-            <p>Sexo: {item.gender}</p>
-            <p>Estilo: {item.style}</p>
-            <img src={item.img}/>
-          </div>
-        ))}
+      <div className="clothing-grid" style={{ marginLeft: '20px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '12px' }}>
+        {filteredClothes.length > 0 ? (
+          filteredClothes.map(item => (
+            <div key={item.id} className="clothing-item" style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '8px' }}>
+              <h4>{item.name}</h4>
+              <p>Color: {item.color}</p>
+              <p>Temporada: {item.season}</p>
+              <p>Sexo: {item.gender}</p>
+              <p>Estilo: {item.style}</p>
+              <img src={item.img} alt={item.name} style={{ width: '100%', objectFit: 'cover' }} />
+            </div>
+          ))
+        ) : (
+          <p>No se encontraron prendas.</p>
+        )}
       </div>
     </div>
   );
