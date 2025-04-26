@@ -67,6 +67,9 @@ const Header = () => {
                             <li>
                                 <a href="#" className="text-gray-900 hover:underline">Contáctanos</a>
                             </li>
+                            <li>
+                                <a href="/prendas" className="text-gray-900 hover:underline">Agregar prendas</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
