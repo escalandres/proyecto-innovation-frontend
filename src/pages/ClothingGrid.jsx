@@ -2,44 +2,99 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { showLoader, hideLoader, alerta } from './js/general';
+import './css/clothing.css'; // Asegúrate de tener este archivo CSS para estilos adicionales
+
+const prendas = ['Camisa', 'Pantalones', 'Vestido', 'Falda', 'Chamarra', 'Abrigo', 'Suéter', 'Camiseta', 'Shorts', 'Traje de baño'];
+const colores = [
+    'Rojo','Azul','Verde','Amarillo','Blanco','Negro','Gris','Beige','Café','Morado','Rosa'
+];
+const estilos = [
+    'Casual', 'Formal', 'Deportivo', 'Juvenil'
+];
+const temporadas = ['Verano', 'Invierno'];
+const sexos = ['Hombre', 'Mujer'];
 
 const FilterPanel = ({ filters, setFilters }) => {
+  const resetFilters = () => {
+    setFilters({
+      color: '',
+      season: '',
+      gender: '',
+      style: '',
+      type: '',
+    });
+  };
   return (
     <div className="filter-panel">
       <h3>Filtrar por</h3>
-      <div>
-        <h4>Color</h4>
-        <select onChange={e => setFilters({ ...filters, color: e.target.value })}>
-          <option value="">Todos</option>
-          <option value="Rojo">Rojo</option>
-          <option value="Azul">Azul</option>
-          <option value="Negro">Negro</option>
-        </select>
-      </div>
-      <div>
-        <h4>Temporada</h4>
-        <select onChange={e => setFilters({ ...filters, season: e.target.value })}>
-          <option value="">Todas</option>
-          <option value="Verano">Verano</option>
-          <option value="Invierno">Invierno</option>
-        </select>
-      </div>
-      <div>
+      <div className='filter-options'>
         <h4>Sexo</h4>
-        <select onChange={e => setFilters({ ...filters, gender: e.target.value })}>
+        <select onChange={e => setFilters({ ...filters, gender: e.target.value })}
+          value={filters.gender}
+        >
           <option value="">Todos</option>
-          <option value="Hombre">Hombre</option>
-          <option value="Mujer">Mujer</option>
+          {
+              sexos.map((prenda, index) => (
+                  <option key={index} value={prenda}>{prenda}</option>
+              ))
+          }
         </select>
       </div>
-      <div>
+      <div className='filter-options'>
+        <h4>Tipo</h4>
+        <select onChange={e => setFilters({ ...filters, type: e.target.value })}
+          value={filters.type}>
+          <option value="">Todos</option>
+          {
+              prendas.map((prenda, index) => (
+                  <option key={index} value={prenda}>{prenda}</option>
+              ))
+          }
+        </select>
+      </div>
+      <div className='filter-options'>
+        <h4>Color</h4>
+        <select onChange={e => setFilters({ ...filters, color: e.target.value })}
+          value={filters.color}>
+          <option value="">Todos</option>
+          {
+              colores.map((prenda, index) => (
+                  <option key={index} value={prenda}>{prenda}</option>
+              ))
+          }
+        </select>
+      </div>
+      <div className='filter-options'>
+        <h4>Temporada</h4>
+        <select onChange={e => setFilters({ ...filters, season: e.target.value })}
+          value={filters.season}>
+        <option value="">Todas</option>
+          {
+              temporadas.map((prenda, index) => (
+                  <option key={index} value={prenda}>{prenda}</option>
+              ))
+          }
+        </select>
+      </div>
+      <div className='filter-options'>
         <h4>Estilo</h4>
-        <select onChange={e => setFilters({ ...filters, style: e.target.value })}>
+        <select onChange={e => setFilters({ ...filters, style: e.target.value })}
+          value={filters.style}>
           <option value="">Todos</option>
-          <option value="Casual">Casual</option>
-          <option value="Formal">Formal</option>
+          {
+              estilos.map((prenda, index) => (
+                  <option key={index} value={prenda}>{prenda}</option>
+              ))
+          }
         </select>
       </div>
+      <button className="button reset-button bg-indigo-600 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+        onClick={resetFilters}
+        >Reiniciar Filtros</button>
+
+      <button className="button hover-button mt-4 bg-indigo-600 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+        onClick={resetFilters}
+        >Reconocimiento facial</button>
     </div>
   );
 };
@@ -50,6 +105,7 @@ FilterPanel.propTypes = {
     season: PropTypes.string,
     gender: PropTypes.string,
     style: PropTypes.string,
+    type: PropTypes.string,
   }).isRequired,
   setFilters: PropTypes.func.isRequired,
 };
@@ -61,6 +117,7 @@ const ClothingGrid = () => {
     season: '',
     gender: '',
     style: '',
+    type: '',
   });
 
   const [clothes, setClothes] = useState([]);
@@ -94,6 +151,7 @@ const ClothingGrid = () => {
       (!filters.color || item.color === filters.color) &&
       (!filters.season || item.season === filters.season) &&
       (!filters.gender || item.gender === filters.gender) &&
+      (!filters.type || item.type === filters.type) &&
       (!filters.style || item.style === filters.style)
     );
   });
@@ -106,6 +164,7 @@ const ClothingGrid = () => {
           filteredClothes.map(item => (
             <div key={item.id} className="clothing-item" style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '8px' }}>
               <h4>{item.name}</h4>
+              <p>Tipo: {item.type}</p>
               <p>Color: {item.color}</p>
               <p>Temporada: {item.season}</p>
               <p>Sexo: {item.gender}</p>

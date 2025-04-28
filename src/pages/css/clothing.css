@@ -1,0 +1,53 @@
+
+
+
+.filter-panel{
+    width: 11%;
+    border: 2px solid blue;
+}
+
+.filter-options{
+    border: 1px solid red;
+    display: flex;
+    align-items: center; /* Alinea verticalmente al centro */
+    padding: 0.5rem 0.5rem; /* Espacio interno */
+}
+
+.filter-options h4 {
+    margin-right: 10px; /* Espacio entre el título y el select */
+}
+
+.filter-options select {
+    width: 100%;
+    padding: 0.3rem; /* Espacio interno */
+    border-radius: 4px; /* Bordes redondeados */
+    border: 1px solid #ccc; /* Borde gris claro */
+    background-color: #f9f9f9; /* Fondo gris claro */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+.filter-options select:hover {
+    background-color: #e0e0e0; /* Fondo gris más oscuro al pasar por encima */
+}
+
+.reset-button{
+    margin-top: 20px;
+    background-color: white!important;
+    color: #4f46e5!important;
+    border: 1px solid #4f46e5!important;
+}
+
+.reset-button:hover{
+    background-color: #4f46e5!important;
+    margin-top: 20px;
+    color: white!important;
+    border: 1px solid #4f46e5!important;
+}
+
+.hover-button:hover{
+    background-color: #5b54e7!important;
+    color: white!important;
+}
+
+/* .clothing-item{
+
+} */
