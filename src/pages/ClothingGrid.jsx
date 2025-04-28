@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
+import Reconocimiento from './Reconocimiento';
 import { showLoader, hideLoader, alerta } from './js/general';
 import './css/clothing.css'; // Asegúrate de tener este archivo CSS para estilos adicionales
 
@@ -15,6 +15,7 @@ const temporadas = ['Verano', 'Invierno'];
 const sexos = ['Hombre', 'Mujer'];
 
 const FilterPanel = ({ filters, setFilters }) => {
+
   const resetFilters = () => {
     setFilters({
       color: '',
@@ -92,9 +93,10 @@ const FilterPanel = ({ filters, setFilters }) => {
         onClick={resetFilters}
         >Reiniciar Filtros</button>
 
-      <button className="button hover-button mt-4 bg-indigo-600 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+      {/* <button className="button hover-button mt-4 bg-indigo-600 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
         onClick={resetFilters}
-        >Reconocimiento facial</button>
+        >Reconocimiento facial</button> */}
+        <Reconocimiento setGender={(gender) => setFilters({ ...filters, gender })}/>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { showLoader, hideLoader, alerta } from './js/general';
 import './css/clothing.css';
 
-function TakePhoto() {
+const TakePhoto = ({ setCloseModal, setGender }) => {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const downloadLinkRef = useRef(null);
@@ -45,7 +45,22 @@ function TakePhoto() {
         else{
             const data = await response.json();
             console.log(data);
-            alerta.success(JSON.stringify(data.message),'Prenda registrada correctamente.');
+            alerta.autoSuccess('¡Buscando recomendaciones para ti!','Recomendando...');
+            
+            let _gender = data.message.genero === 'Male' ? 'Hombre' : 'Mujer';
+            // alerta.autoSuccess(_gender)
+
+            showLoader();
+            setTimeout(() => {
+                setGender(_gender)
+                setCloseModal();
+                hideLoader();
+            }, 3000);
+            
+
+            
+
+            
             // setTimeout(() => {
             //     window.location.reload();
             // }, 2500);
@@ -59,8 +74,8 @@ function TakePhoto() {
         
     };
     return (
-        <div className='container mx-auto flex flex-col items-center justify-center h-screen'>
-            <h1>Captura de Foto</h1>
+        <div className='container mx-auto flex flex-col items-center justify-center'>
+            <h2>Captura de Foto</h2>
             <video ref={videoRef} width="640" height="480" autoPlay></video>
             <button className="button reset-button bg-indigo-600 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
                 onClick={takePhoto}>Tomar Foto</button>
