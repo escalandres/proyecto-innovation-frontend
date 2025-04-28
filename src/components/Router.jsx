@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Homepage from '../pages/Homepage';
 import AgregarPrendas from '../pages/AgregarPrendas';
+import TakePhoto from '../pages/TakePhoto';
 // import ProtectedRoute from './ProtectedRoute';
 
 
@@ -13,6 +14,10 @@ const Router = createBrowserRouter(
         {
             path: "/prendas",
             element: <AgregarPrendas/>,
+        },
+        {
+            path: "/foto",
+            element: <TakePhoto/>,
         }
         // {
         //     path: "/login",

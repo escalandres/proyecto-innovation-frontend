@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { alerta, showLoader, hideLoader } from './js/general';
 
-const prendas = ['Camisa', 'Pantalones', 'Vestido', 'Falda', 'Chamarra', 'Abrigo', 'Suéter', 'Camiseta', 'Shorts', 'Traje de baño'];
+const prendas = ['Camisa', 'Pantalones', 'Vestido', 'Falda', 'Chamarra', 'Abrigo', 'Suéter', 'Blazer', 'Camiseta', 'Shorts', 'Bermudas', 'Blusa', 'Traje de baño'];
 
 const colores = [
     'Rojo','Azul','Verde','Amarillo','Blanco','Negro','Gris','Beige','Café','Morado','Rosa'

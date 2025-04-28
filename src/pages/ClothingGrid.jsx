@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { showLoader, hideLoader, alerta } from './js/general';
 import './css/clothing.css'; // Asegúrate de tener este archivo CSS para estilos adicionales
 
-const prendas = ['Camisa', 'Pantalones', 'Vestido', 'Falda', 'Chamarra', 'Abrigo', 'Suéter', 'Camiseta', 'Shorts', 'Traje de baño'];
+const prendas = ['Camisa', 'Pantalones', 'Vestido', 'Falda', 'Chamarra', 'Abrigo', 'Suéter', 'Blazer', 'Camiseta', 'Shorts', 'Bermudas', 'Blusa', 'Traje de baño'];
 const colores = [
     'Rojo','Azul','Verde','Amarillo','Blanco','Negro','Gris','Beige','Café','Morado','Rosa'
 ];
@@ -163,7 +163,7 @@ const ClothingGrid = () => {
         {filteredClothes.length > 0 ? (
           filteredClothes.map(item => (
             <div key={item.id} className="clothing-item" style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '8px' }}>
-              <h4>{item.name}</h4>
+              <h4 className='text-indigo-600 font-bold'>{item.name}</h4>
               <p>Tipo: {item.type}</p>
               <p>Color: {item.color}</p>
               <p>Temporada: {item.season}</p>
